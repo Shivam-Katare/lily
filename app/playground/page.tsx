@@ -14,16 +14,20 @@ import { getEncouragingMessage } from "@/lib/utils";
 export default function PlaygroundPage() {
   const router = useRouter();
   const resetSession = useAppStore((state) => state.resetSession);
-  const [paragraph, setParagraph] = useState(getRandomParagraph());
-  const [message, setMessage] = useState(getEncouragingMessage());
+  const [paragraph, setParagraph] = useState({ id: 1, text: "" });
+  const [message, setMessage] = useState("");
   
-  // Reset session when component mounts
+  // Reset session and set paragraph when component mounts
   useEffect(() => {
     resetSession();
+    setParagraph(getRandomParagraph());
   }, [resetSession]);
   
-  // Change encouraging message every 10 seconds
+  // Set initial message and change it every 10 seconds
   useEffect(() => {
+    // Set the initial message on client-side only
+    setMessage(getEncouragingMessage());
+    
     const interval = setInterval(() => {
       setMessage(getEncouragingMessage());
     }, 10000);

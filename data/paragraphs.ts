@@ -48,6 +48,11 @@ export const paragraphs: Paragraph[] = [
 ];
 
 export const getRandomParagraph = (): Paragraph => {
+  // Use a fixed index during server-side rendering to avoid hydration mismatch
+  if (typeof window === 'undefined') {
+    return paragraphs[0];
+  }
+  
   const randomIndex = Math.floor(Math.random() * paragraphs.length);
   return paragraphs[randomIndex];
 }; 

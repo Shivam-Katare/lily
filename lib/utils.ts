@@ -92,6 +92,11 @@ export const getEncouragingMessage = (): string => {
     "You're creating a moment of calm in your day...",
   ];
   
+  // Use a fixed index during server-side rendering to avoid hydration mismatch
+  if (typeof window === 'undefined') {
+    return messages[0];
+  }
+  
   return messages[Math.floor(Math.random() * messages.length)];
 };
 
@@ -109,6 +114,11 @@ export const getCompletionQuote = (): string => {
     "The space between keystrokes holds as much meaning as the words themselves.",
     "When we type with intention, even the simplest words become profound.",
   ];
+  
+  // Use a fixed index during server-side rendering to avoid hydration mismatch
+  if (typeof window === 'undefined') {
+    return quotes[0];
+  }
   
   return quotes[Math.floor(Math.random() * quotes.length)];
 };

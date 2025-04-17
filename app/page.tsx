@@ -11,10 +11,15 @@ import { getEncouragingMessage } from "@/lib/utils";
 
 export default function Home() {
   const router = useRouter();
-  const [quote, setQuote] = useState(getEncouragingMessage());
+  const [quote, setQuote] = useState("");
+  const [previewParagraph, setPreviewParagraph] = useState({ id: 1, text: "" });
   
-  // Change quote every 8 seconds
+  // Set initial data on client-side only
   useEffect(() => {
+    // Set the initial quote on client-side only
+    setQuote(getEncouragingMessage());
+    setPreviewParagraph(getRandomParagraph());
+    
     const interval = setInterval(() => {
       setQuote(getEncouragingMessage());
     }, 8000);
@@ -78,7 +83,7 @@ export default function Home() {
         >
           <div className="p-5 bg-card rounded-lg shadow-sm hover:shadow transition-all duration-300">
             <p className="text-sm text-card-foreground/80 font-serif leading-relaxed">
-              {getRandomParagraph().text}
+              {previewParagraph.text}
             </p>
             <p className="mt-3 text-xs text-muted-foreground text-right">
               — Preview of typing content
