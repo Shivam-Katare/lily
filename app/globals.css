@@ -57,6 +57,47 @@
   }
 }
 
+/* Custom Theme Backgrounds */
+.bg-theme-summer {
+  background-image: linear-gradient(to right top, #ffefba, #ffead3, #ffeef0, #fff7ff, #ffffff);
+}
+
+.bg-theme-winter {
+  background-image: linear-gradient(to right top, #dce3f0, #e4eaf4, #ecf1f7, #f4f7fb, #fdfeff);
+}
+
+.bg-theme-rainy {
+  background-image: linear-gradient(to right top, #c9d6ff, #d3d8f7, #dadbf0, #dfdee9, #e2e2e2);
+}
+
+.bg-theme-autumn {
+  background-image: linear-gradient(to right top, #ffd194, #f4c17e, #e8b168, #dda152, #d1913c);
+}
+
+.bg-theme-summer-night {
+  background-image: linear-gradient(to right top, #2c5364, #244654, #1d3944, #162c35, #0f2027);
+}
+
+.bg-theme-winter-night {
+  background-image: linear-gradient(to right top, #3a4b63, #323f54, #2a3446, #222938, #1a1f2b);
+}
+
+.bg-theme-rainy-night {
+  background-image: linear-gradient(to right top, #434343, #333333, #242424, #161616, #000000);
+}
+
+.bg-theme-autumn-night {
+  background-image: linear-gradient(to right top, #3e1f0d, #351b0b, #2c1809, #241407, #1c0f05);
+}
+
+.bg-theme-windy-night {
+  background-image: linear-gradient(to right top, #232526, #2a2c2d, #323435, #393b3d, #414345);
+}
+
+.bg-theme-sunset {
+  background-image: linear-gradient(to right top, #434343, #675264, #9b5d6c, #c56e5b, #d1913c);
+}
+
 @layer base {
 
   body {
@@ -169,4 +210,9 @@
 
 .animate-out {
   animation: exit 0.2s ease;
+}
+
+.theme-transition {
+  transition: background-image 0.5s ease;
+  animation: fade-in 0.5s ease;
 }

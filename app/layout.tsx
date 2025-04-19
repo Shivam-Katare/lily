@@ -14,6 +14,9 @@ import { dark } from "@clerk/themes";
 import { SoundToggle } from "@/components/sound-toggle";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Toaster } from "react-hot-toast";
+import { MusicPlayer } from "@/components/music-player";
+import { ThemeSelector } from "@/components/theme-selector";
+import { ThemeBackground } from "@/components/theme-background";
 
 const garamond = EB_Garamond({
   variable: "--font-garamond",
@@ -65,35 +68,39 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-             <header className="w-full p-4 flex justify-between items-center">
-        <div className="flex items-center gap-1">
-          <SoundToggle />
-          <ThemeToggle />
-        </div>  
-            <SignedOut>
-              <SignInButton mode="modal" />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
+            <ThemeBackground>
+              <header className="w-full p-4 flex justify-between items-center">
+                <div className="flex items-center gap-1">
+                  <SoundToggle />
+                  <ThemeToggle />
+                  <ThemeSelector />
+                </div>  
+                <SignedOut>
+                  <SignInButton mode="modal" />
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
+              </header>
 
-            {children}
-            <Toaster position="top-center" toastOptions={{
-              className: '',
-              style: {
-                border: '1px solid var(--border)',
-                padding: '16px',
-                color: 'var(--foreground)',
-                background: 'var(--background)',
-              },
-              success: {
-                iconTheme: {
-                  primary: '#22c55e',
-                  secondary: 'white',
+              {children}
+              <MusicPlayer />
+              <Toaster position="top-center" toastOptions={{
+                className: '',
+                style: {
+                  border: '1px solid var(--border)',
+                  padding: '16px',
+                  color: 'var(--foreground)',
+                  background: 'var(--background)',
                 },
-              }
-            }} />
+                success: {
+                  iconTheme: {
+                    primary: '#22c55e',
+                    secondary: 'white',
+                  },
+                }
+              }} />
+            </ThemeBackground>
           </ThemeProvider>
         </body>
       </html>
