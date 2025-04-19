@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { toast } from '@/components/ui/use-toast';
+import toast from 'react-hot-toast';
 import { Database } from '@/types/supabase';
 import { createClient } from '@supabase/supabase-js';
 
@@ -24,11 +24,7 @@ export const useTypingSessionsStore = create<TypingSessionsState>((set) => ({
   saveSession: async (sessionData, userId, authToken) => {
     if (!userId || !authToken) {
       set({ status: 'error', error: 'User not authenticated' });
-      toast({ 
-        title: 'Authentication Error', 
-        description: 'You must be signed in to save typing sessions.',
-        variant: 'destructive'
-      });
+      toast.error('You must be signed in to save typing sessions.');
       return;
     }
 
@@ -59,11 +55,7 @@ export const useTypingSessionsStore = create<TypingSessionsState>((set) => ({
       }
       
       set({ status: 'success', isSaving: false });
-      toast({
-        title: 'Session Saved',
-        description: 'Your typing session has been saved successfully!',
-        variant: 'success',
-      });
+      toast.success('Your typing session has been saved successfully!');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to save session';
       set({ 
@@ -71,11 +63,7 @@ export const useTypingSessionsStore = create<TypingSessionsState>((set) => ({
         error: errorMessage,
         isSaving: false 
       });
-      toast({
-        title: 'Error Saving Session',
-        description: errorMessage,
-        variant: 'destructive',
-      });
+      toast.error(`Error: ${errorMessage}`);
     }
   },
   

@@ -38,7 +38,7 @@ export default function PlaygroundPage() {
   };
   
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="min-h-[calc(100vh-5rem)] flex flex-col">
       <header className="w-full p-4 flex justify-between items-center">
         <button
           onClick={goBack}

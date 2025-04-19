@@ -13,7 +13,7 @@ import {
 import { dark } from "@clerk/themes";
 import { SoundToggle } from "@/components/sound-toggle";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "react-hot-toast";
 
 const garamond = EB_Garamond({
   variable: "--font-garamond",
@@ -79,7 +79,21 @@ export default function RootLayout({
           </header>
 
             {children}
-            <Toaster />
+            <Toaster position="top-center" toastOptions={{
+              className: '',
+              style: {
+                border: '1px solid var(--border)',
+                padding: '16px',
+                color: 'var(--foreground)',
+                background: 'var(--background)',
+              },
+              success: {
+                iconTheme: {
+                  primary: '#22c55e',
+                  secondary: 'white',
+                },
+              }
+            }} />
           </ThemeProvider>
         </body>
       </html>

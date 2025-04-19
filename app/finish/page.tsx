@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Home, RefreshCw } from "lucide-react";
@@ -17,7 +17,7 @@ export default function FinishPage() {
   const { user, isLoaded, isSignedIn } = useUser();
   const { session } = useSession();
   const { saveSession, status, isSaving } = useTypingSessionsStore();
-  const [hasAttemptedToSave, setHasAttemptedToSave] = useState(false);
+  const saveAttemptedRef = useRef(false);
   const stats = useAppStore((state) => state.stats);
   
   // Prevent accessing this page directly without completing a session
@@ -30,12 +30,14 @@ export default function FinishPage() {
   // Save session data if user is authenticated
   useEffect(() => {
     const saveTypingSession = async () => {
-      if (isLoaded && isSignedIn && user && session && !hasAttemptedToSave && stats.time > 0) {
-        setHasAttemptedToSave(true);
+      // Check if save was already attempted to prevent double saves
+      if (saveAttemptedRef.current) return;
+      
+      if (isLoaded && isSignedIn && user && session && stats.time > 0) {
+        saveAttemptedRef.current = true;
         
         try {
           const token = await session.getToken();
-          console.log('token', token);
           if (token) {
             await saveSession(
               {
@@ -54,7 +56,7 @@ export default function FinishPage() {
     };
 
     saveTypingSession();
-  }, [isLoaded, isSignedIn, user, session, saveSession, stats, hasAttemptedToSave]);
+  }, [isLoaded, isSignedIn, user, session, saveSession, stats]);
   
   const goHome = () => {
     resetSession();
@@ -67,7 +69,7 @@ export default function FinishPage() {
   };
   
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="min-h-[calc(100vh-5rem)] flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-center px-4 pb-20 text-center">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
