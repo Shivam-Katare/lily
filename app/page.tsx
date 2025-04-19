@@ -1,11 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { SoundToggle } from "@/components/sound-toggle";
 import { getRandomParagraph } from "@/data/paragraphs";
 import { getEncouragingMessage } from "@/lib/utils";
 
@@ -32,14 +29,7 @@ export default function Home() {
   };
   
   return (
-    <main className="min-h-screen flex flex-col">
-      <header className="w-full p-4 flex justify-between items-center">
-        <div className="flex items-center gap-1">
-          <SoundToggle />
-          <ThemeToggle />
-        </div>
-      </header>
-      
+    <main className="min-h-[calc(100vh-5rem)] flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-center px-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: -20 }}

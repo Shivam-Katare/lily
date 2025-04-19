@@ -1,7 +1,7 @@
 "use client";
 
 import { Volume2, VolumeX } from "lucide-react";
-import { useAppStore } from "@/lib/store";
+import { useAppStore } from "@/store/store";
 
 export function SoundToggle() {
   const { isSoundEnabled, toggleSound } = useAppStore();

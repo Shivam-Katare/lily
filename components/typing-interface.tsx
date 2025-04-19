@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { useAppStore } from "@/lib/store";
+import { useAppStore } from "@/store/store";
 import { splitIntoWords, calculateStats } from "@/lib/utils";
 import { playKeypressSound, playErrorSound, playCompleteSound } from "@/lib/sound";
 import { useRouter } from "next/navigation";

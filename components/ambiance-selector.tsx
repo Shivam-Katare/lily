@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAppStore } from "@/lib/store";
+import { useAppStore } from "@/store/store";
 import { initializeAmbiance, playAmbiance, stopAmbiance } from "@/lib/sound";
 
 export function AmbianceSelector() {

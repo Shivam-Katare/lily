@@ -1,6 +1,6 @@
 "use client";
 
-import { useAppStore } from "@/lib/store";
+import { useAppStore } from "@/store/store";
 import { Clock, Feather } from "lucide-react";
 
 export function ModeToggle() {

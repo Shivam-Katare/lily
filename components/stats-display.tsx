@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useAppStore } from "@/lib/store";
+import { useAppStore } from "@/store/store";
 import { formatTime } from "@/lib/utils";
 
 export function StatsDisplay() {

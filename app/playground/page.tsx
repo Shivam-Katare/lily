@@ -4,11 +4,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
-import { useAppStore } from "@/lib/store";
+import { useAppStore } from "@/store/store";
 import { getRandomParagraph } from "@/data/paragraphs";
 import { TypingInterface } from "@/components/typing-interface";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { SoundToggle } from "@/components/sound-toggle";
 import { getEncouragingMessage } from "@/lib/utils";
 
 export default function PlaygroundPage() {
@@ -50,11 +48,6 @@ export default function PlaygroundPage() {
           <ArrowLeft className="h-4 w-4" />
           <span className="text-sm">Back</span>
         </button>
-        
-        <div className="flex items-center gap-1">
-          <SoundToggle />
-          <ThemeToggle />
-        </div>
       </header>
       
       <div className="flex-1 flex flex-col items-center justify-center px-4 pt-10 pb-20">

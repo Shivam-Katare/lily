@@ -4,16 +4,21 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Home, RefreshCw } from "lucide-react";
-import { useAppStore } from "@/lib/store";
+import { useAppStore } from "@/store/store";
 import { StatsDisplay } from "@/components/stats-display";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { SoundToggle } from "@/components/sound-toggle";
 import { getCompletionQuote } from "@/lib/utils";
+import { useUser, useSession } from "@clerk/nextjs";
+import { useTypingSessionsStore } from "@/store/typing-sessions";
 
 export default function FinishPage() {
   const router = useRouter();
   const resetSession = useAppStore((state) => state.resetSession);
   const [quote, setQuote] = useState(getCompletionQuote());
+  const { user, isLoaded, isSignedIn } = useUser();
+  const { session } = useSession();
+  const { saveSession, status, isSaving } = useTypingSessionsStore();
+  const [hasAttemptedToSave, setHasAttemptedToSave] = useState(false);
+  const stats = useAppStore((state) => state.stats);
   
   // Prevent accessing this page directly without completing a session
   useEffect(() => {
@@ -21,6 +26,35 @@ export default function FinishPage() {
       router.replace("/");
     }
   }, [router]);
+  
+  // Save session data if user is authenticated
+  useEffect(() => {
+    const saveTypingSession = async () => {
+      if (isLoaded && isSignedIn && user && session && !hasAttemptedToSave && stats.time > 0) {
+        setHasAttemptedToSave(true);
+        
+        try {
+          const token = await session.getToken();
+          console.log('token', token);
+          if (token) {
+            await saveSession(
+              {
+                wpm: stats.wpm,
+                accuracy: stats.accuracy,
+                duration_seconds: stats.time,
+              },
+              user.id,
+              token
+            );
+          }
+        } catch (error) {
+          console.error('Failed to save typing session:', error);
+        }
+      }
+    };
+
+    saveTypingSession();
+  }, [isLoaded, isSignedIn, user, session, saveSession, stats, hasAttemptedToSave]);
   
   const goHome = () => {
     resetSession();
@@ -34,13 +68,6 @@ export default function FinishPage() {
   
   return (
     <main className="min-h-screen flex flex-col">
-      <header className="w-full p-4 flex justify-end items-center">
-        <div className="flex items-center gap-1">
-          <SoundToggle />
-          <ThemeToggle />
-        </div>
-      </header>
-      
       <div className="flex-1 flex flex-col items-center justify-center px-4 pb-20 text-center">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -66,6 +93,19 @@ export default function FinishPage() {
         </motion.div>
         
         <StatsDisplay />
+        
+        {isSignedIn && status === 'loading' && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mt-6 text-sm text-muted-foreground"
+          >
+            <div className="flex items-center gap-2">
+              <div className="h-4 w-4 rounded-full border-2 border-primary border-t-transparent animate-spin"></div>
+              <span>Saving your session...</span>
+            </div>
+          </motion.div>
+        )}
         
         <motion.div
           initial={{ opacity: 0, y: 20 }}
