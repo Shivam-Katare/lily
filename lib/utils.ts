@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-import { Stats } from "./store";
+import { Stats } from "../store/store";
 
 /**
  * Calculates Words Per Minute (WPM)

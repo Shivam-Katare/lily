@@ -1,7 +1,7 @@
 "use client";
 
 import { Howl } from "howler";
-import { SoundTheme } from "./store";
+import { SoundTheme } from "../store/store";
 
 // Sound file locations
 const SOUNDS = {
